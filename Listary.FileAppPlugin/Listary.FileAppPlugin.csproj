@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <Authors>Listary</Authors>
+    <Description>Listary file application plugin interfaces</Description>
+    <PackageProjectUrl>https://github.com/listary/Listary.FileAppPlugin</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/listary/Listary.FileAppPlugin.git</RepositoryUrl>
+    <PackageTags>Listary;Windows</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.0-beta</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\images\icon.png" Pack="True" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
