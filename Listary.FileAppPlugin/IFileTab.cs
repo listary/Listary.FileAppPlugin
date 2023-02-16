@@ -15,10 +15,10 @@ namespace Listary.FileAppPlugin
     ///       <description>Get the folder displayed in this tab.</description>
     ///     </item>
     ///     <item><term><see cref="IOpenFolder"/></term>
-    ///       <description>Open a folder in this tab.</description>
+    ///       <description>Jump to a folder in this tab.</description>
     ///     </item>
     ///     <item><term><see cref="IOpenFolderAndSelectFile"/></term>
-    ///       <description>Open a folder in this tab and select a specified file in it.</description>
+    ///       <description>Jump to a folder in this tab and select a specified file in it.</description>
     ///     </item>
     ///     <item><term><see cref="IOpenFile"/></term>
     ///       <description>Open a file in this tab. Mainly used for file dialogs.</description>

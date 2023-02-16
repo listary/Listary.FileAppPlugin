@@ -27,7 +27,7 @@ namespace Listary.FileAppPlugin
     public interface IFileAppPlugin
     {
         /// <summary>
-        /// Whether the folders opened by this file application should be used by other applications.
+        /// Whether the folders opened by this file application should be shared with other applications.
         /// <para>
         ///   Currently, this property determines:
         ///   <list type="bullet">
@@ -43,7 +43,7 @@ namespace Listary.FileAppPlugin
         /// Whether to automatically switch to the folder opened in other file applications after
         /// pressing hotkeys or switching folders in other file applications.
         /// <para>
-        ///   This property should be <c>true</c> for file dialogs.
+        ///   This property should be <c>true</c> for file dialogs and <c>false</c> for file managers.
         /// </para>
         /// </summary>
         bool IsQuickSwitchTarget { get; }
@@ -58,14 +58,21 @@ namespace Listary.FileAppPlugin
         bool IsSharedAcrossApplications { get; }
 
         /// <summary>
-        /// Which type of search bar to use for this file application. 
+        /// Which type of search bar to use for this file application.
+        /// <para>
+        ///   Commonly, <see cref="SearchBarType.Floating"/> is used for file managers and
+        ///   <see cref="SearchBarType.Fixed"/> is used for file dialogs.
+        /// </para>
         /// </summary>
         SearchBarType SearchBarType { get; }
 
+        /// <summary>
+        /// Initialize the plugin.
+        /// </summary>
         Task<bool> Initialize(IFileAppPluginHost host);
 
         /// <summary>
-        /// Bind a window to <see cref="IFileWindow"/>.
+        /// Bind an external window to <see cref="IFileWindow"/>.
         /// </summary>
         /// <returns><c>null</c> if the window cannot be bound (i.e. is an unknown window for the plugin)</returns>
         IFileWindow BindFileWindow(IntPtr hWnd);
@@ -90,19 +97,43 @@ namespace Listary.FileAppPlugin
     {
         ILogger Logger { get; }
 
-        /// <summary>Send the window message with a high integrity level. This method can work with windows created by a "Run as administrator" process.</summary>
+        /// <summary>
+        /// Send the window message with a high integrity level.
+        /// This method can work with windows created by a "Run as administrator" process.
+        /// <para>
+        ///   You should use this method instead of invoking SendMessage yourself.
+        /// </para>
+        /// </summary>
         /// <param name="wParam">Cannot be a pointer.</param>
         /// <param name="lParam">Cannot be a pointer.</param>
         IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
-        /// <summary>Send the window message with a high integrity level. This method can work with windows created by a "Run as administrator" process.</summary>
+        /// <summary>
+        /// Send the window message with a high integrity level.
+        /// This method can work with windows created by a "Run as administrator" process.
+        /// <para>
+        ///   You should use this method instead of invoking SendMessage yourself.
+        /// </para>
+        /// </summary>
         /// <param name="wParam">Cannot be a pointer.</param>
         IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, byte[] lParam);
 
-        /// <summary>Send the WM_COPYDATA message with a high integrity level. This method can work with windows created by a "Run as administrator" process.</summary>
+        /// <summary>
+        /// Send the WM_COPYDATA message with a high integrity level.
+        /// This method can work with windows created by a "Run as administrator" process.
+        /// <para>
+        ///   You should use this method instead of invoking SendMessage yourself.
+        /// </para>
+        /// </summary>
         IntPtr SendCopyData(IntPtr hWnd, IntPtr sourceWindow, IntPtr dwData, byte[] data, uint dataSize, uint timeout = 0);
 
-        /// <summary>Post the window message with a high integrity level. This method can work with windows created by a "Run as administrator" process.</summary>        
+        /// <summary>
+        /// Post the window message with a high integrity level.
+        /// This method can work with windows created by a "Run as administrator" process.
+        /// <para>
+        ///   You should use this method instead of invoking PostMessage yourself.
+        /// </para>
+        /// </summary>        
         /// <param name="wParam">Cannot be a pointer.</param>
         /// <param name="lParam">Cannot be a pointer.</param>
         bool PostMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
