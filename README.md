@@ -11,3 +11,4 @@ NuGet does not support HTML elements, so there is no need to use absolute links 
 [Listary](https://www.listary.com/) file application plugin interfaces.
 
 - [Getting Started](https://github.com/listary/Listary.FileAppPlugin/blob/master/docs/Getting%20Started.md)
+- [Plugin Repository](https://github.com/listary/Listary.FileAppPlugin.Repository)
