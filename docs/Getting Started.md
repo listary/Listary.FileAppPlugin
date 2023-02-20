@@ -227,7 +227,7 @@ public IFileWindow BindFileWindow(IntPtr hWnd)
 }
 ```
 
-In this process, you will usually need to call some Win32 APIs. You can get P/Invoke signatures of the APIs you want to use from [pinvoke.net: the interop wiki!](https://pinvoke.net/). You can also use the [C#/Win32 P/Invoke Source Generator](https://github.com/microsoft/CsWin32), but this requires you to change language version of the project to at least C# 9.
+In this process, you will usually need to call some Win32 APIs. You can get P/Invoke signatures of the APIs you want to use from [pinvoke.net: the interop wiki!](https://pinvoke.net/). You can also use the [C#/Win32 P/Invoke Source Generator](https://github.com/microsoft/CsWin32), but this requires you to change the language version of the project to at least C# 9. For the sake of simplicity, [this project uses the former](https://github.com/listary/Listary.FileAppPlugin.WinRAR/blob/main/Listary.FileAppPlugin.WinRAR.ExtractDialog/Win32Utils.cs); if you need an example using the latter, please see [Listary.FileAppPlugin.DirectoryOpus](https://github.com/listary/Listary.FileAppPlugin.DirectoryOpus/blob/main/Listary.FileAppPlugin.DirectoryOpus/Win32Utils.cs).
 
 ## Implementing IFileWindow and IFileTab
 `IFileWindow` and `IFileTab` are the interfaces Listary uses to manipulate the file window. How to implement them depends on the GUI framework used by the application you want to target:
