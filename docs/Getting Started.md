@@ -38,7 +38,7 @@ Before beginning to write the code, we need to create a class library project ta
 Project names should follow the naming convention: `Listary.FileAppPlugin.ApplicationName`, for example, `Listary.FileAppPlugin.WinRAR`. But here we are not developing a plugin for the main window of WinRAR, but for the extract dialog, hence `Listary.FileAppPlugin.WinRAR.ExtractDialog` would be a more appropriate name for our plugin.
 
 9. Add the plugin interface package [Listary.FileAppPlugin](https://www.nuget.org/packages/Listary.FileAppPlugin) to our project: **Tools → NuGet Package Manager → Package Manager Console**
-10. In the console, run the command `NuGet\\Install-Package Listary.FileAppPlugin \-Version 1.0.0`
+10. In the console, run the command `NuGet\Install-Package Listary.FileAppPlugin -Version 1.0.0`
     
 ![](images/open-pmc.png)
 
