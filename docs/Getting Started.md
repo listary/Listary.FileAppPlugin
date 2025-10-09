@@ -9,7 +9,7 @@ This is how to open the extract dialog:
 2. Go to any .zip or .rar file  
 3. Select it and click the **Extract To** button.  
 4. Ensure the Listary window pops up below the WinRAR extract dialog
-
+   
 ![](images/extract-dialog.png)
 
 ## Setting up the project
@@ -17,17 +17,17 @@ Before beginning to write the code, we need to create a class library project ta
 
 1. Download and install the [Visual Studio Installer](https://visualstudio.microsoft.com/downloads/)
 2. Go to the installed tab and click **Modify**. If you don’t have a version installed yet, go to the Available tab and click **Install**
-
+   
 ![](images/install-enviroment.png)
 
-3. Select **.NET desktop development** as the workload
-4. Under the individual components tab, select **C++ Core Features** and **C++ Profiling Tools** to gain access to Spy++ [used in finding the WinRAR window handle]
+4. Select **.NET desktop development** as the workload
+5. Under the individual components tab, select **C++ Core Features** and **C++ Profiling Tools** to gain access to Spy++. It's used in [finding the WinRAR window handle](#Finding-the-WinRAR-window-handle)
 
 ![](images/find-addons.png)
 
-5. Open Visual Studio.  
-6. Click **Create a New Project** or click **File → New → Project**
-7. Select **Class Library (.NET Framework)** and click **Next**
+7. Open Visual Studio.  
+8. Click **Create a New Project** or click **File → New → Project**
+9. Select **Class Library (.NET Framework)** and click **Next**
 
 ![](images/new-project.png)
 
@@ -38,8 +38,9 @@ Before beginning to write the code, we need to create a class library project ta
 Project names should follow the naming convention: `Listary.FileAppPlugin.ApplicationName`, for example, `Listary.FileAppPlugin.WinRAR`. But here we are not developing a plugin for the main window of WinRAR, but for the extract dialog, hence `Listary.FileAppPlugin.WinRAR.ExtractDialog` would be a more appropriate name for our plugin.
 
 9. Add the plugin interface package [Listary.FileAppPlugin](https://www.nuget.org/packages/Listary.FileAppPlugin) to our project: **Tools → NuGet Package Manager → Package Manager Console**
-10. In the console, run the command `NuGet\\Install-Package Listary.FileAppPlugin \-Version 1.0.0` 
-    ![](images/open-pmc.png)
+10. In the console, run the command `NuGet\\Install-Package Listary.FileAppPlugin \-Version 1.0.0`
+    
+![](images/open-pmc.png)
 
 ## Adding the plugin manifest
 A manifest file is required for the plugin to be recognized. The manifest file should be a JSON file named `ListaryPluginManifest.json`. You can add it to your project:
@@ -208,8 +209,8 @@ namespace Listary.FileAppPlugin.WinRAR.ExtractDialog
 ### Finding the WinRAR window handle
 
 To implement `BindFileWindow`, we need to find a way to identify WinRAR's extract dialog. We can use Visual Studio's [Spy++](https://learn.microsoft.com/en-us/visualstudio/debugger/introducing-spy-increment) to do this. You can start Spy++ from the tools menu:
-
 ![](images/acess-spy.png)
+
 Spy++ is included in C++ core features and C++ profiling tools which we [installed earlier](#setting-up-the-project).
 
 After starting it, you should open the [WinRAR's extract dialog](#getting-started), refresh the windows in Spy++ and find the window of WinRAR's extract dialog:
