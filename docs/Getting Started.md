@@ -37,10 +37,10 @@ Before beginning to write the code, we need to create a class library project ta
 
 ![](images/project-name-screen.png)
 
-Project names should follow the naming convention: Listary.FileAppPlugin.\[ApplicationName\], for example, Listary.FileAppPlugin.WinRAR. But here we are not developing a plugin for the main window of WinRAR, but for the extract dialog, hence Listary.FileAppPlugin.WinRAR.ExtractDialog would be a more appropriate name for our plugin.
+Project names should follow the naming convention: `Listary.FileAppPlugin.\[ApplicationName\]`, for example, `Listary.FileAppPlugin.WinRAR`. But here we are not developing a plugin for the main window of WinRAR, but for the extract dialog, hence `Listary.FileAppPlugin.WinRAR.ExtractDialog` would be a more appropriate name for our plugin.
 
 9. Add the plugin interface package [Listary.FileAppPlugin](https://www.nuget.org/packages/Listary.FileAppPlugin) to our project: Tools → NuGet Package Manager → Package Manager Console  
-10.  In the console, run the command NuGet\\Install-Package Listary.FileAppPlugin \-Version 1.0.0.  
+10.  In the console, run the command `NuGet\\Install-Package Listary.FileAppPlugin \-Version 1.0.0.` 
     ![](images/open-pmc.png)
 
 ## Adding the plugin manifest
@@ -100,17 +100,19 @@ A manifest file is required for the plugin to be recognized. The manifest file s
   Since we are making a .NET Framework plugin, it should be `NetFramework`.
 
 - Entry
+  
+  The filename of the assembly containing your plugin classes, which would be `[ProjectName].dll` for a project with the default configuration.
 
 5\. Instruct Visual Studio to automatically copy the manifest to the output directory after each build.
 
-1. Right click on ListaryPluginManifest.json  
+1. Right click on `ListaryPluginManifest.json`  
 2. Go to the properties  
 3. Select Copy if newer in the Copy to Output Directory property
 
 ![](images/manifest-file-properties.png)
 
 ## Implementing IFileAppPlugin
-The entry point of the plugin is IFileAppPlugin. What follows is the template in which all Listary FileAppPlugins must follow:
+The entry point of the plugin is `IFileAppPlugin`. What follows is the template in which all Listary FileAppPlugins must follow:
 ```csharp
 /// <summary>
 /// A file application plugin. A file application can be a file manager or an application with its own file dialog.
@@ -205,11 +207,9 @@ namespace Listary.FileAppPlugin.WinRAR.ExtractDialog
 }
 ```
 
-Where the BindFileWindow method is defined [here](#implementing-bindfilewindow\(\)).
+### Finding the WinRAR window handle
 
-### Finding the WinRAR window handle {#finding-the-winrar-window-handle}
-
-To implement BindFileWindow, we need to find a way to identify WinRAR's extract dialog. We can use Visual Studio's [Spy++](https://learn.microsoft.com/en-us/visualstudio/debugger/introducing-spy-increment) to do this. You can start Spy++ from the tools menu:
+To implement `BindFileWindow`, we need to find a way to identify WinRAR's extract dialog. We can use Visual Studio's [Spy++](https://learn.microsoft.com/en-us/visualstudio/debugger/introducing-spy-increment) to do this. You can start Spy++ from the tools menu:
 
 ![](images/acess-spy.png)
 Spy++ is included in C++ core features and C++ profiling tools which we [installed earlier](#setting-up-the-project).
@@ -223,7 +223,7 @@ After starting it, you should open the [WinRAR's extract dialog](#getting-starte
 Alternatively, you can use the Finder Tool and drag it over the window title of the extraction dialog.
 
 ![](images/spy_find.png)
-### Implementing BindFileWindow() {#implementing-bindfilewindow()}
+### Implementing BindFileWindow()
 
 How to identify the currently opened window as WinRAR's extract dialog:
 
@@ -248,7 +248,7 @@ public IFileWindow BindFileWindow(IntPtr hWnd)
     return null;
 }
 ```
-Remember to implement this in ExtractDialogPlugin.
+Remember to implement this in `ExtractDialogPlugin`.
 
 In this process, you will usually need to call some Win32 APIs. You can get P/Invoke signatures of the APIs you want to use from [pinvoke.net: the interop wiki](https://pinvoke.net/). You can also use the [C\#/Win32 P/Invoke Source Generator](https://github.com/microsoft/CsWin32), but this requires you to change the language version of the project to at least C\# 9\. For the sake of simplicity, [this project uses the former](https://github.com/listary/Listary.FileAppPlugin.WinRAR/blob/main/Listary.FileAppPlugin.WinRAR.ExtractDialog/Win32Utils.cs); if you need an example using the latter, please see [Listary.FileAppPlugin.DirectoryOpus](https://github.com/listary/Listary.FileAppPlugin.DirectoryOpus/blob/main/Listary.FileAppPlugin.DirectoryOpus/Win32Utils.cs).
 
@@ -259,7 +259,7 @@ In this process, you will usually need to call some Win32 APIs. You can get P/In
 * For other GUI frameworks, including Qt, XAML-based GUI (WPF, UWP, WinUI and Avalonia UI) and web-based GUI (Electron and CEF), you can manipulate their windows using [UI Automation](https://learn.microsoft.com/dotnet/framework/ui-automation/ui-automation-overview) (successor to Microsoft Active Accessibility).  
 * If the application is extensible or you are just the developer, you can implement them using IPC.
 
-WinRAR uses MFC, so here we will implement IFileWindow and IFileTab using window messages.
+WinRAR uses MFC, so here we will implement `IFileWindow` and `IFileTab` using window messages.
 
 `IFileWindow’s` outline is defined as:
 ```csharp
@@ -429,7 +429,7 @@ You can set the project's start action to launch DevTools:
 
 There is no need to specify the command line arguments as DevTools will automatically load the plugin from the working directory.
 
-The path to the DevTools is ..\\Listary\\Listary.FileAppPlugin.DevTools.exe
+The path to the DevTools is `..\\Listary\\Listary.FileAppPlugin.DevTools.exe`
 
 You may also open the DevTools using launch profiles:
 
@@ -444,19 +444,19 @@ You may also open the DevTools using launch profiles:
 
 1\. Open the [WinRAR extract dialog](#getting-started).
 
-2\. Set a breakpoint in BindFileWindow() (press F9)
+2\. Set a breakpoint in `BindFileWindow()` (press F9)
 
 3\. Launch the Visual Studio debugger (press F5). DevTools will load the plugin and display the plugin information for you to check. 
 
 ![](images/debugger-menu.png)
 
-4\. Switch to the File windows tab. It will show all the opened WinRAR's extract dialog if BindFileWindow is working correctly.
+4\. Switch to the File windows tab. It will show all the opened WinRAR's extract dialog if `BindFileWindow` is working correctly.
 
 ### Testing IOpenFolder()
 
-1\. Set a breakpoint in IOpenFolder
+1\. Set a breakpoint in `IOpenFolder`
 
-2\. Right click the target item and select Jump to C:\\Program Files.
+2\. Right click the target item and select `Jump to C:\\Program Files`.
 
 ![](images/jump-to-c-test.png)
 
@@ -464,18 +464,18 @@ You may also open the DevTools using launch profiles:
 
 First we need to build the plugin to create the necessary dlls.
 
-1. From the Visual Studio menu: Build → Build Solution  
+1. From the Visual Studio menu: `Build → Build Solution`  
 2. Copy the output directory to Listary's plugins directory   
-   (..\\Listary\\FileAppPlugins) and test the plugin with Listary.  
+   (`..\\Listary\\FileAppPlugins`) and test the plugin with Listary.  
    ![](images/example-path.png)
 3. Restart Listary  
-4. Disable Listary’s existing WinRar plugin and enable yours through the Listary options → Integration.
+4. Disable Listary’s existing WinRAR plugin and enable yours through the `Listary options → Integration`.
 
 ![](images/listary-settings-path.png)
 
-The output directory is \<The folder you put your original project in\>\\bin\\debug OR \<The folder you put your original project in\>\\\<project name\>\\bin\\debug\\net48.
+The output directory is `\<The folder you put your original project in\>\\bin\\debug` OR `\<The folder you put your original project in\>\\\<project name\>\\bin\\debug\\net48`.
 
-5. Ensure the Listary window pops up under the WinRAR extraction dialog (ie: BindFileWindow works) and that choosing a destination folder in Listary fills the Destination path (ie: IOpenFolder works)
+5. Ensure the Listary window pops up under the WinRAR extraction dialog (ie: `BindFileWindow` works) and that choosing a destination folder in Listary fills the Destination path (ie: `IOpenFolder` works)
 
 **Listary working for the WinRAR extract dialog.**
 
